@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tokopedia/model/comment.dart';
 import 'package:tokopedia/model/item.dart';
 
 class DetailPage extends StatefulWidget {
@@ -13,13 +15,23 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   TextEditingController reviewController = TextEditingController();
+  var comments = [];
 
-  void handleSend() {
+  void handleSend() async {
+    final prefs = await SharedPreferences.getInstance();
+    var username = prefs.getString('username');
     String review = reviewController.text;
+
     if (review.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Review cannot be empty!")));
     }
+
+    var comment = Comment(username.toString(), review);
+    setState(() {
+      reviewController.text = "";
+      comments.add(comment);
+    });
   }
 
   @override
@@ -52,9 +64,18 @@ class _DetailPageState extends State<DetailPage> {
               ))),
           Container(
               padding: const EdgeInsets.all(10),
-              child: Column(
-                children: const [Text("Ini adalah comments")],
-              ))
+              child: Column(children: [
+                Expanded(
+                    child: ListView.builder(
+                  itemCount: comments.length,
+                  itemBuilder: (context, index) {
+                    return Column(children: [
+                      Text(comments[index].name),
+                      Text(comments[index].comment),
+                    ]);
+                  },
+                ))
+              ]))
         ]),
       ),
     );

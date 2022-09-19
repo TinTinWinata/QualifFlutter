@@ -47,20 +47,27 @@ class _ItemPageState extends State<ItemPage> {
               child: ListView.builder(
             itemCount: items.length,
             itemBuilder: (context, index) {
-              return Column(children: [
-                Text(items[index].name),
-                Text(items[index].price.toString()),
-                Image.asset(items[index].image),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return DetailPage(item: items[index]);
-                        },
-                      ));
-                    },
-                    child: const Text("Buy"))
-              ]);
+              return Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(children: [
+                  Text(
+                    items[index].name,
+                    style: const TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                  Text(items[index].price.toString()),
+                  Image.asset(items[index].image),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return DetailPage(item: items[index]);
+                          },
+                        ));
+                      },
+                      child: const Text("Buy"))
+                ]),
+              );
             },
           ))
         ],

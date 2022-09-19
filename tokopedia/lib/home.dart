@@ -16,10 +16,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+        body: SingleChildScrollView(
+      child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: CarouselSlider(
               items: images.map((e) {
                 return Image.asset(e);
@@ -30,8 +31,26 @@ class HomePage extends StatelessWidget {
                   autoPlayInterval: const Duration(seconds: 3)),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(0),
+            child: Column(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  child: Text("About Us",
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  child: Text(
+                      "Tokopedia adalah perusahaan teknologi Indonesia dengan misi mencapai pemerataan ekonomi secara digital"),
+                ),
+              ],
+            ),
+          )
         ],
       ),
-    );
+    ));
   }
 }

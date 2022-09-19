@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokopedia/navigation.dart';
 import 'package:tokopedia/item.dart';
 
@@ -15,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void handleLogin() {
+  void handleLogin() async {
     String error = "";
     String username = usernameController.text;
     String password = passwordController.text;
@@ -46,6 +47,10 @@ class _LoginPageState extends State<LoginPage> {
         },
       );
     } else {
+      // Set Shared Preferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString("username", username);
+
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
         builder: (context) {
           return NavigationPage(
@@ -58,24 +63,56 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
         body: SingleChildScrollView(
-      child: Center(
+      child: Container(
+        width: size.width,
+        height: size.height,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset("assets/logo.png"),
-            const Text("Email"),
-            TextField(
-              controller: usernameController,
-              decoration: const InputDecoration(hintText: "Email"),
+            Image.asset(
+              "assets/logo.png",
+              width: 250,
             ),
-            const Text("Password"),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(hintText: "Password"),
+            // const Text("Email"),
+
+            Container(
+              alignment: Alignment.center,
+              width: size.width * 0.8,
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    style: const TextStyle(fontSize: 13, height: 0),
+                    controller: usernameController,
+                    decoration: const InputDecoration(
+                        hintText: "Email",
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(width: 0.3))),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    obscureText: true,
+                    style: const TextStyle(fontSize: 13, height: 0),
+                    controller: passwordController,
+                    decoration: const InputDecoration(
+                        hintText: "Password", border: OutlineInputBorder()),
+                  ),
+                ),
+              ]),
             ),
-            ElevatedButton(onPressed: handleLogin, child: const Text("Login")),
+            Container(
+              width: size.width * 0.8,  
+              height: 50,
+              child: ElevatedButton(
+                  onPressed: handleLogin, child: const Text("Login")),
+            ),
           ],
         ),
       ),
