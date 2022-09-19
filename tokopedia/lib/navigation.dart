@@ -30,9 +30,26 @@ class NavigationPageState extends State<NavigationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[idx],
+      // extendBodyBehindAppBar: true,
+
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text(widget.username),
+        leading: const Icon(Icons.sms_outlined),
+        title: Container(
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const TextField(
+            style: TextStyle(fontSize: 15),
+            decoration: InputDecoration(
+                icon: Icon(Icons.search),
+                hintText: "Search",
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none),
+          ),
+        ),
+        centerTitle: true,
         actions: [
           PopupMenuButton<MenuItem>(
             onSelected: (value) {
@@ -58,6 +75,11 @@ class NavigationPageState extends State<NavigationPage> {
             ],
           )
         ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(0)),
+        ),
+        backgroundColor: Colors.green, // Colors.white.withOpacity(0.1),
+        elevation: 0,
       ),
       bottomNavigationBar: NavigationBar(
         height: 60,

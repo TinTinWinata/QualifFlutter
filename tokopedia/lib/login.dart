@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokopedia/navigation.dart';
 import 'package:tokopedia/item.dart';
+import 'package:tokopedia/settings/constant.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -74,45 +75,99 @@ class _LoginPageState extends State<LoginPage> {
           // crossAxisAlignment: CrossAxisAlignment.start,
           // mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              "assets/logo.png",
-              width: 250,
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: Image.asset(
+                "assets/logo.png",
+                width: 300,
+              ),
             ),
+
             // const Text("Email"),
 
             Container(
               alignment: Alignment.center,
               width: size.width * 0.8,
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    style: const TextStyle(fontSize: 13, height: 0),
-                    controller: usernameController,
-                    decoration: const InputDecoration(
-                        hintText: "Email",
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 0.3))),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    obscureText: true,
-                    style: const TextStyle(fontSize: 13, height: 0),
-                    controller: passwordController,
-                    decoration: const InputDecoration(
-                        hintText: "Password", border: OutlineInputBorder()),
-                  ),
-                ),
-              ]),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(20, 10, 0, 10),
+                      child: const Text(
+                        "Nomor HP atau Email",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(
+                          myDefaultPadding, 5, myDefaultPadding, 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: myDefaultPadding),
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        style: const TextStyle(fontSize: 15),
+                        controller: usernameController,
+                        decoration: const InputDecoration(
+                            icon: Icon(
+                              Icons.person,
+                              color: Colors.green,
+                            ),
+                            hintText: "Email",
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(
+                          myDefaultPadding, 0, myDefaultPadding, 30),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: myDefaultPadding),
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        obscureText: true,
+                        style: const TextStyle(fontSize: 15),
+                        controller: passwordController,
+                        decoration: const InputDecoration(
+                            icon: Icon(
+                              Icons.key,
+                              color: Colors.green,
+                            ),
+                            hintText: "Password",
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none),
+                      ),
+                    ),
+                  ]),
             ),
             Container(
-              width: size.width * 0.8,  
-              height: 50,
+              width: size.width * 0.75,
+              height: 40,
               child: ElevatedButton(
-                  onPressed: handleLogin, child: const Text("Login")),
+                  onPressed: handleLogin,
+                  child: const Text(
+                    "Login",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
             ),
+            Container(
+              alignment: Alignment.centerRight,
+              margin: const EdgeInsets.fromLTRB(0, 7, 60, 0),
+              child: const Text(
+                "Butuh bantuan ?",
+                style: TextStyle(color: Colors.green),
+              ),
+            )
           ],
         ),
       ),

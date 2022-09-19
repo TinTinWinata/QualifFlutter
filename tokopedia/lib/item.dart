@@ -22,6 +22,7 @@ class _ItemPageState extends State<ItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -41,37 +42,63 @@ class _ItemPageState extends State<ItemPage> {
         ),
       ),
       body: Container(
+          alignment: Alignment.center,
           child: Column(
-        children: [
-          Expanded(
-              child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(25.0),
-                child: Column(children: [
-                  Text(
-                    items[index].name,
-                    style: const TextStyle(
-                        fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  Text(items[index].price.toString()),
-                  Image.asset(items[index].image),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return DetailPage(item: items[index]);
-                          },
-                        ));
-                      },
-                      child: const Text("Buy"))
-                ]),
-              );
-            },
-          ))
-        ],
-      )),
+            children: [
+              Expanded(
+                  child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(25.0),
+                    child: Column(children: [
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                          child: Image.asset(items[index].image)),
+                      Flex(direction: Axis.horizontal, children: [
+                        Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                items[index].name,
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            Container(
+                                alignment: Alignment.bottomLeft,
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                child: Text(
+                                  items[index].price.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          width: 200,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                              ),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return DetailPage(item: items[index]);
+                                  },
+                                ));
+                              },
+                              child: const Text("Buy")),
+                        )
+                      ]),
+                    ]),
+                  );
+                },
+              ))
+            ],
+          )),
     );
   }
 }

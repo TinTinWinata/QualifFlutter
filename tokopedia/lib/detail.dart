@@ -52,14 +52,30 @@ class _DetailPageState extends State<DetailPage> {
                   child: Column(
                 children: [
                   Image.asset(widget.item.image),
-                  Text(widget.item.price.toString()),
-                  Text(widget.item.name),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 3),
+                    child: Text(
+                      widget.item.name,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 3),
+                      child: Text(widget.item.price.toString())),
                   TextField(
                     controller: reviewController,
                     decoration: const InputDecoration(hintText: "Comment"),
                   ),
-                  ElevatedButton(
-                      onPressed: handleSend, child: const Text("Send Comment")),
+                  Container(
+                    width: 800,
+                    child: ElevatedButton(
+                        onPressed: handleSend,
+                        child: const Text(
+                          "Send Comment",
+                          style: TextStyle(backgroundColor: Colors.green),
+                        )),
+                  ),
                 ],
               ))),
           Container(
@@ -69,10 +85,33 @@ class _DetailPageState extends State<DetailPage> {
                     child: ListView.builder(
                   itemCount: comments.length,
                   itemBuilder: (context, index) {
-                    return Column(children: [
-                      Text(comments[index].name),
-                      Text(comments[index].comment),
-                    ]);
+                    return Container(
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 20, 0, 10),
+                                child: Text(
+                                  comments[index].name,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )),
+                            Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          offset: const Offset(3, 1),
+                                          blurRadius: 20,
+                                          color: Colors.grey.withOpacity(0.3))
+                                    ],
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Text(comments[index].comment)),
+                          ]),
+                    );
                   },
                 ))
               ]))
